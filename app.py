@@ -1,14 +1,18 @@
 import streamlit as st
 import pandas as pd
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+import json
+import os
+from google.oauth2.service_account import Credentials
 
 # Conexión a Google Sheets
 @st.cache_resource
 def connect_to_sheet():
     scope = ["https://spreadsheets.google.com/feeds",
              "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    creds_json = os.getenv("GOOGLE_CREDS_JSON")
+    creds_dict = json.loads(creds_json)
+    creds = Credentials.from_service_account_info(creds_dict)
     client = gspread.authorize(creds)
     sheet = client.open_by_key("1atwNg78a44JGEkBZ8aZS460Ga5hh5Z0b1XlY7Co8VFc").sheet1
     return sheet
