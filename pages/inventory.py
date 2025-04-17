@@ -8,7 +8,7 @@ from google.oauth2.service_account import Credentials
 # Conexión a Google Sheets
 @st.cache_resource
 def connect_to_sheet():
-    scope = ["https://spreadsheets.google.com/feeds",
+    scope = ["https://www.googleapis.com/auth/spreadsheets",
              "https://www.googleapis.com/auth/drive"]
     creds_json = os.getenv("GOOGLE_CREDS_JSON")
     creds_dict = json.loads(creds_json)
